@@ -554,7 +554,6 @@
     <Compile Include="Frm_BDImportaexcel.Designer.cs">
       <DependentUpon>Frm_BDImportaexcel.cs</DependentUpon>
     </Compile>
-    <Compile Include="lerEmail.cs" />
     <Compile Include="Microsoft\VisualBasic\Interaction.cs" />
     <Compile Include="Frm_PDFsoldaduraescolha.cs">
       <SubType>Form</SubType>
