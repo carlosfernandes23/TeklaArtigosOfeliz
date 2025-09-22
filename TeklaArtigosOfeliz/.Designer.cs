@@ -47,6 +47,7 @@ namespace TeklaArtigosOfeliz
             this.macrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alteraFaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.desenhoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.criarFasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ferramentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +76,7 @@ namespace TeklaArtigosOfeliz
             this.button9 = new Guna.UI2.WinForms.Guna2Button();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.label4 = new System.Windows.Forms.Label();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirPastasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             alterarBaseDeDadosCPEDapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -166,8 +167,8 @@ namespace TeklaArtigosOfeliz
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.parametrosToolStripMenuItem,
             this.desenhoToolStripMenuItem,
-            this.exportarToolStripMenuItem,
             this.utilitariosToolStripMenuItem,
+            this.exportarToolStripMenuItem,
             this.EmailStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -192,37 +193,44 @@ namespace TeklaArtigosOfeliz
             // parametrosToolStripMenuItem1
             // 
             this.parametrosToolStripMenuItem1.Name = "parametrosToolStripMenuItem1";
-            this.parametrosToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.parametrosToolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
             this.parametrosToolStripMenuItem1.Text = "Parametros";
             this.parametrosToolStripMenuItem1.Click += new System.EventHandler(this.parametrosToolStripMenuItem1_Click);
             // 
             // quantificaçãoToolStripMenuItem
             // 
             this.quantificaçãoToolStripMenuItem.Name = "quantificaçãoToolStripMenuItem";
-            this.quantificaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quantificaçãoToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.quantificaçãoToolStripMenuItem.Text = "Quantificação";
             this.quantificaçãoToolStripMenuItem.Click += new System.EventHandler(this.quantificaçãoToolStripMenuItem_Click);
             // 
             // macrosToolStripMenuItem
             // 
             this.macrosToolStripMenuItem.Name = "macrosToolStripMenuItem";
-            this.macrosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.macrosToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.macrosToolStripMenuItem.Text = "Macros";
             this.macrosToolStripMenuItem.Click += new System.EventHandler(this.macrosToolStripMenuItem_Click);
             // 
             // alteraFaseToolStripMenuItem
             // 
             this.alteraFaseToolStripMenuItem.Name = "alteraFaseToolStripMenuItem";
-            this.alteraFaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.alteraFaseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.alteraFaseToolStripMenuItem.Text = "Altera Fase";
             this.alteraFaseToolStripMenuItem.Click += new System.EventHandler(this.alteraFaseToolStripMenuItem_Click);
             // 
             // lotesToolStripMenuItem
             // 
             this.lotesToolStripMenuItem.Name = "lotesToolStripMenuItem";
-            this.lotesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lotesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.lotesToolStripMenuItem.Text = "Lotes";
             this.lotesToolStripMenuItem.Click += new System.EventHandler(this.lotesToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(163, 22);
+            this.toolStripMenuItem2.Text = "2";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
             // 
             // desenhoToolStripMenuItem
             // 
@@ -299,6 +307,7 @@ namespace TeklaArtigosOfeliz
             // utilitariosToolStripMenuItem
             // 
             this.utilitariosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.abrirPastasToolStripMenuItem,
             this.abrirObraToolStripMenuItem,
             this.limparTodasAsUDADaPeçaToolStripMenuItem,
             this.pDFSoldaduraToolStripMenuItem,
@@ -470,12 +479,12 @@ namespace TeklaArtigosOfeliz
             this.label4.Size = new System.Drawing.Size(0, 17);
             this.label4.TabIndex = 92;
             // 
-            // toolStripMenuItem2
+            // abrirPastasToolStripMenuItem
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem2.Text = "2";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
+            this.abrirPastasToolStripMenuItem.Name = "abrirPastasToolStripMenuItem";
+            this.abrirPastasToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.abrirPastasToolStripMenuItem.Text = "Abrir Pastas";
+            this.abrirPastasToolStripMenuItem.Click += new System.EventHandler(this.abrirPastasToolStripMenuItem_Click);
             // 
             // Frm_Inico
             // 
@@ -554,6 +563,7 @@ namespace TeklaArtigosOfeliz
         private ToolStripMenuItem atualizarEmialsToolStripMenuItem;
         private ToolStripMenuItem imprimirDesenhosToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem abrirPastasToolStripMenuItem;
     }
 }
 

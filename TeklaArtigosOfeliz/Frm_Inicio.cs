@@ -39,7 +39,7 @@ namespace TeklaArtigosOfeliz
     {
 
         public static string CaminhoModelo = null;
-        public string versaotekla = "2024.0";
+        public string versaotekla = "2025.0";
         public static string PastaPartilhada = null;
 
         public static string PastaReservatorioFicheiros = null;
@@ -616,7 +616,7 @@ namespace TeklaArtigosOfeliz
         private void macrosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process OPEN = new Process();
-            OPEN.StartInfo.FileName = @"\\Marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\4 Produção\Desenvolvimentos\36.Ligaçõestekla\2024\LigacoesTekla.exe";
+            OPEN.StartInfo.FileName = @"\\Marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\4 Produção\Desenvolvimentos\36.Ligaçõestekla\2025\LigacoesTekla.exe";
             OPEN.Start();
         }
 
@@ -713,6 +713,13 @@ namespace TeklaArtigosOfeliz
         {
             LBLestado.Visible = true;
             ComunicaTekla.imprimepdf(ComunicaTekla.ListadeConjuntosSelec(), ComunicaTekla.ListadePecasSelec(), LBLestado);
+        }
+        private void abrirPastasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            Frm_AbrirObra F = new Frm_AbrirObra();
+            F.ShowDialog();
+            this.Visible = true;
         }
 
         public void Pdfsoldadura()
@@ -1267,8 +1274,8 @@ namespace TeklaArtigosOfeliz
             Frm_Parafusaria_v2 F = new Frm_Parafusaria_v2();
             F.ShowDialog();
             this.Visible = true;
-        }             
-       
+        }
 
+        
     }
 }

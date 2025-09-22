@@ -58,7 +58,7 @@ namespace TeklaArtigosOfeliz
                 designacao = M.GetProjectInfo().Builder;
 
                 string EXC = null;
-                new Model().GetProjectInfo().GetUserProperty("PROJECT_USERFIELD_2", ref EXC);
+                new Model().GetProjectInfo().GetUserProperty("Classe_de_ex", ref EXC);
                 if (EXC.Trim() == "")
                     EXC = "2";
 

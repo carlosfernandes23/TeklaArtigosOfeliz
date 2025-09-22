@@ -275,7 +275,7 @@ namespace TeklaArtigosOfeliz
                         Conjunto.GetReportProperty("MAINPART.USERDEFINED.Grau_DE_pre", ref cdu_graupreparacao);
 
                         string cdu_classeexecucao = null;
-                        Conjunto.GetReportProperty("PROJECT.USERDEFINED.PROJECT_USERFIELD_2", ref cdu_classeexecucao);
+                        Conjunto.GetReportProperty("PROJECT.USERDEFINED.Classe_de_ex", ref cdu_classeexecucao);
 
                         string cdu_referenciacliente = null;
                         Conjunto.GetReportProperty("PROJECT.USERDEFINED.USER_FIELD_1", ref cdu_referenciacliente);
@@ -686,7 +686,7 @@ namespace TeklaArtigosOfeliz
                 Peca.GetReportProperty("AREA", ref CDU_Area);
 
                 string CDU_ClasseExecucao = null;
-                Peca.GetReportProperty("PROJECT.USERDEFINED.PROJECT_USERFIELD_2", ref CDU_ClasseExecucao);
+                Peca.GetReportProperty("PROJECT.USERDEFINED.Classe_de_ex", ref CDU_ClasseExecucao);
 
                 string CDU_ReferenciaCliente = null;
 

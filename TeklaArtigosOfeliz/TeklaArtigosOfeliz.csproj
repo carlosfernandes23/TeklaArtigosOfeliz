@@ -404,6 +404,12 @@
     <Compile Include="AlteraFase.Designer.cs">
       <DependentUpon>AlteraFase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_AbrirObra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_AbrirObra.Designer.cs">
+      <DependentUpon>Frm_AbrirObra.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_AtualizarEmails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -638,6 +644,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AlteraFase.resx">
       <DependentUpon>AlteraFase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_AbrirObra.resx">
+      <DependentUpon>Frm_AbrirObra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_AtualizarEmails.resx">
       <DependentUpon>Frm_AtualizarEmails.cs</DependentUpon>

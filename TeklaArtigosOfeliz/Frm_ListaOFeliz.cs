@@ -180,7 +180,7 @@ namespace TeklaArtigosOfeliz
         //        if (SOLDA)
         //        {
         //            string EXC=null;
-        //            new Model().GetProjectInfo().GetUserProperty("PROJECT_USERFIELD_2", ref EXC);
+        //            new Model().GetProjectInfo().GetUserProperty("Classe_de_ex", ref EXC);
         //            if (EXC.Trim() == "")
         //                EXC = "2";
 
@@ -248,6 +248,7 @@ namespace TeklaArtigosOfeliz
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
                 Validadados();
+                ModificarPolicarbonato();
 
                 // Verifica se precisa criar plano de soldadura
                 bool SOLDA = false;
@@ -267,7 +268,7 @@ namespace TeklaArtigosOfeliz
                 if (SOLDA)
                 {
                     string EXC = null;
-                    new Model().GetProjectInfo().GetUserProperty("PROJECT_USERFIELD_2", ref EXC);
+                    new Model().GetProjectInfo().GetUserProperty("Classe_de_ex", ref EXC);
                     EXC = string.IsNullOrWhiteSpace(EXC) ? "2" : EXC.Trim();
 
                     var celula = dataGridView1.Rows[0].Cells[0].Value;
@@ -1472,5 +1473,45 @@ namespace TeklaArtigosOfeliz
         {
             //VerificarImportacaoPrimavera();
         }
+
+        private void ModificarPolicarbonato()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                var cellValue = row.Cells[9].Value?.ToString();
+
+                if (!string.IsNullOrEmpty(cellValue))
+                {
+                    cellValue = cellValue.ToUpper();
+                    if (cellValue.StartsWith("TCL") || cellValue.StartsWith("ABA-CHEIA"))
+                    {
+                        string[] partes = cellValue.Split('-');
+                        if (partes.Length > 1)
+                        {
+                            string ultimoValor = partes[partes.Length - 1];
+
+                            string cor = "SEM COR!!!!";
+                            var corCell = row.Cells[43].Value?.ToString();
+                            if (!string.IsNullOrEmpty(corCell))
+                            {
+                                corCell = corCell.ToUpper();
+                                if (corCell.Contains("CRISTALINO") || corCell.Contains("TRANSPARENTE"))
+                                    cor = "Cristal";
+                                else if (corCell.Contains("BRANCO OPALINO"))
+                                    cor = "Opalino";
+                            }
+                            string resultado = $"KINYA Panel {ultimoValor} mm {cor} RO";
+
+                            row.Cells[9].Value = resultado;
+                            if (row.Cells.Count > 44)
+                                row.Cells[44].Value = "KINYA";
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

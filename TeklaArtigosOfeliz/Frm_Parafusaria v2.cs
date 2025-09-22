@@ -56,7 +56,7 @@ namespace TeklaArtigosOfeliz
                 {
                     if (peca != null)
                     {
-                        peca.GetReportProperty("PROJECT.USERDEFINED.PROJECT_USERFIELD_2", ref classeEX);
+                        peca.GetReportProperty("PROJECT.USERDEFINED.Classe_de_ex", ref classeEX);
                         peca.GetReportProperty("USERDEFINED.lote_number", ref lote);
                         peca.GetReportProperty("USERDEFINED.lote_data", ref dataObra);
                         peca.GetReportProperty("USERDEFINED.Fase", ref fase);

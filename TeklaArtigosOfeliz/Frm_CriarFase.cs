@@ -277,7 +277,7 @@ namespace TeklaArtigosOfeliz
             int ClasseDeExecusao = 0;
 
             TSM.Model model = new Model();
-            model.GetProjectInfo().GetUserProperty("PROJECT_USERFIELD_2", ref ClasseDeExecusao);
+            model.GetProjectInfo().GetUserProperty("Classe_de_ex", ref ClasseDeExecusao);
             if (ClasseDeExecusao == 2 || ClasseDeExecusao == 3)
             {
                 ArrayList pecas = ComunicaTekla.ListadePecasdoConjSelec();
@@ -974,7 +974,7 @@ namespace TeklaArtigosOfeliz
                         part.PartNumber.StartNumber = 1;
                         part.PartNumber.Prefix = "C";
                         part.AssemblyNumber.StartNumber = 1;
-                        part.AssemblyNumber.Prefix = "CJ";
+                        part.AssemblyNumber.Prefix = "[CJ]";
                         part.Modify();
                     }
                     else
@@ -993,7 +993,7 @@ namespace TeklaArtigosOfeliz
                             part.PartNumber.StartNumber = 1;
                             part.PartNumber.Prefix = "P";
                             part.AssemblyNumber.StartNumber = 1;
-                            part.AssemblyNumber.Prefix = "CJ";
+                            part.AssemblyNumber.Prefix = "[CJ]";
                             part.Modify();
                         }
                     }
@@ -1010,7 +1010,7 @@ namespace TeklaArtigosOfeliz
                     part.PartNumber.StartNumber = 1;
                     part.PartNumber.Prefix = "C";
                     part.AssemblyNumber.StartNumber = 1;
-                    part.AssemblyNumber.Prefix = "CJ";
+                    part.AssemblyNumber.Prefix = "[CJ]";
                     part.Modify();
                 }
                 else
@@ -1029,7 +1029,7 @@ namespace TeklaArtigosOfeliz
                         part.PartNumber.StartNumber = 1;
                         part.PartNumber.Prefix = "P";
                         part.AssemblyNumber.StartNumber = 1;
-                        part.AssemblyNumber.Prefix = "CJ";
+                        part.AssemblyNumber.Prefix = "[CJ]";
                         part.Modify();
                     }
                 }
@@ -1621,7 +1621,7 @@ namespace TeklaArtigosOfeliz
                     TSM.Part peca = (TSM.Part)peças[index];
                     if (peca != null)
                     {
-                        bool Classeexsucc = peca.GetReportProperty("USERDEFINED.PROJECT_USERFIELD_2", ref Classeex);
+                        bool Classeexsucc = peca.GetReportProperty("USERDEFINED.Classe_de_ex", ref Classeex);
                         bool Grausuccess = peca.GetReportProperty("USERDEFINED.Grau_DE_pre", ref Grauprep);
                         if (Grausuccess && Classeexsucc)
                         {
