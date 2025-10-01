@@ -25,7 +25,9 @@ namespace TeklaArtigosOfeliz
             _Formpai = formpai;
             alteradstv();
             RemoverParafusos();
+
         }
+            
 
         private void RemoverParafusos()
         {
@@ -227,15 +229,15 @@ namespace TeklaArtigosOfeliz
 
                 File.Delete(@"C:\R\OFELIZ.CSV");
 
-                // Limpeza e ajustes nas células
+                //// Limpeza e ajustes nas células
                 for (int a = 0; a < dataGridView1.Rows.Count - 1; a++)
                 {
                     for (int b = 0; b < dataGridView1.ColumnCount - 1; b++)
                     {
                         if (b == 3)
                         {
-                            dataGridView1.Rows[a].Cells[3].Value =
-                                $"2.{lbl_numeroobra.Text}.{dataGridView1.Rows[a].Cells[0].Value}.{a + 1}";
+                            dataGridView1.Rows[a].Cells[3].Value = $"2.{lbl_numeroobra.Text}.{dataGridView1.Rows[a].Cells[0].Value}.{a + 1}";
+                            
                         }
                         else
                         {
@@ -244,6 +246,22 @@ namespace TeklaArtigosOfeliz
                         }
                     }
                 }
+                for (int a = 0; a < dataGridView1.Rows.Count - 1; a++)
+                {
+                    var valor = dataGridView1.Rows[a].Cells[3].Value?.ToString().Trim();
+
+                    if (!string.IsNullOrEmpty(valor))
+                    {
+                        valor = valor.TrimEnd('.');
+
+                        valor = string.Join("", valor.Split(' '));
+
+                        dataGridView1.Rows[a].Cells[3].Value = valor;
+                    }
+                }
+
+
+
 
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
@@ -847,8 +865,6 @@ namespace TeklaArtigosOfeliz
         //        BD.DesonectarBDArtigo();
         //    }
         //}
-
-
         public void InserirTarefaNoBDElias()
         {
             string nomeObra = label1.Text;
@@ -1472,8 +1488,33 @@ namespace TeklaArtigosOfeliz
         private void Frm_ListaOFeliz_FormClosed(object sender, FormClosedEventArgs e)
         {
             //VerificarImportacaoPrimavera();
+            Avisocumeeira();
         }
+        public void Avisocumeeira()
+        {
+            string[] iniciais = { "TC3", "TC5", "TCC", "TCD", "TCT" };
 
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                var valor = row.Cells[9].Value?.ToString();
+
+                if (!string.IsNullOrEmpty(valor))
+                {
+                    if (iniciais.Any(inicial => valor.StartsWith(inicial, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show(
+                            "Não se esqueça de solicitar a encomenda das cumeeiras.",
+                            "Aviso Importante",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                        break;
+                    }
+                }
+            }
+        }
         private void ModificarPolicarbonato()
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)

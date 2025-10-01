@@ -1311,7 +1311,7 @@ namespace TeklaArtigosOfeliz
                 }
             }
 
-            var singleRule = new TSD.Automation.AutoDrawingRule(@"rui.dproc");//AssemblyDrawings.dproc
+            var singleRule = new TSD.Automation.AutoDrawingRule(@"OF_Catalogo_Mestre.dproc");//AssemblyDrawings.dproc
             TSD.Automation.AutoDrawingsStatusEnum singleOperationStatus;
 
             //gurantee drawing closed

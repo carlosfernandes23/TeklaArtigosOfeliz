@@ -1314,19 +1314,17 @@ namespace TeklaArtigosOfeliz
                     IEnumerable dis = tudo.Distinct();
 
                     // FIM DA PROCURA
-
                     foreach (string item in dis)
                     {
                         var result = Regex.Split(item, @"\d+$")[0] + "." + Regex.Match(item, @"\d+$").Value;
 
-
                         new TeklaMacroBuilder.MacroBuilder()
                             .ValueChange("Drawing_selection", "diaSearchInOptionMenu", "7")
-                            .ValueChange("Drawing_selection", "diaDrawingListSearchCriteria", result)
+                            .ValueChange("Drawing_selection", "diaDrawingListSearchCriteria", result.Replace("-", ""))
                             .PushButton("diaDrawingListSearch", "Drawing_selection")
                             .TableSelect("Drawing_selection", "dia_draw_select_list", new int[] { 1 })
                             .PopupCallback("acmd_copy_drawing_to_new_sheet", "", "Drawing_selection", "dia_draw_select_list")
-                            .ValueChange("Drawing_selection", "diaDrawingListSearchCriteria", result + " - 1")
+                            .ValueChange("Drawing_selection", "diaDrawingListSearchCriteria", result.Replace("-", "") + " - 1")
                             .PushButton("diaDrawingListSearch", "Drawing_selection")
                             .TableSelect("Drawing_selection", "dia_draw_select_list", new int[] { 1 })
                             .Activate("Drawing_selection", "dia_draw_select_list")

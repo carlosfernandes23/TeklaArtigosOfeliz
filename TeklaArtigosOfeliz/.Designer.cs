@@ -47,7 +47,6 @@ namespace TeklaArtigosOfeliz
             this.macrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alteraFaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.desenhoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.criarFasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ferramentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,15 +54,16 @@ namespace TeklaArtigosOfeliz
             this.verificarDesenhoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ativarPropriedadesAntigasToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.imprimirDesenhosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportarNC1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.utilitariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirPastasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.abrirObraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.limparTodasAsUDADaPeçaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pDFSoldaduraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nESTDESENVOLVIMENTOToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.listaDeDuvidasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.atualizarEmialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportarNC1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EmailStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.enviarParaFabricoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enviarEmailParaLotearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +76,6 @@ namespace TeklaArtigosOfeliz
             this.button9 = new Guna.UI2.WinForms.Guna2Button();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.label4 = new System.Windows.Forms.Label();
-            this.abrirPastasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             alterarBaseDeDadosCPEDapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -183,8 +182,7 @@ namespace TeklaArtigosOfeliz
             this.quantificaçãoToolStripMenuItem,
             this.macrosToolStripMenuItem,
             this.alteraFaseToolStripMenuItem,
-            this.lotesToolStripMenuItem,
-            this.toolStripMenuItem2});
+            this.lotesToolStripMenuItem});
             this.parametrosToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.parametrosToolStripMenuItem.Name = "parametrosToolStripMenuItem";
             this.parametrosToolStripMenuItem.Size = new System.Drawing.Size(66, 21);
@@ -193,44 +191,37 @@ namespace TeklaArtigosOfeliz
             // parametrosToolStripMenuItem1
             // 
             this.parametrosToolStripMenuItem1.Name = "parametrosToolStripMenuItem1";
-            this.parametrosToolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
+            this.parametrosToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.parametrosToolStripMenuItem1.Text = "Parametros";
             this.parametrosToolStripMenuItem1.Click += new System.EventHandler(this.parametrosToolStripMenuItem1_Click);
             // 
             // quantificaçãoToolStripMenuItem
             // 
             this.quantificaçãoToolStripMenuItem.Name = "quantificaçãoToolStripMenuItem";
-            this.quantificaçãoToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.quantificaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.quantificaçãoToolStripMenuItem.Text = "Quantificação";
             this.quantificaçãoToolStripMenuItem.Click += new System.EventHandler(this.quantificaçãoToolStripMenuItem_Click);
             // 
             // macrosToolStripMenuItem
             // 
             this.macrosToolStripMenuItem.Name = "macrosToolStripMenuItem";
-            this.macrosToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.macrosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.macrosToolStripMenuItem.Text = "Macros";
             this.macrosToolStripMenuItem.Click += new System.EventHandler(this.macrosToolStripMenuItem_Click);
             // 
             // alteraFaseToolStripMenuItem
             // 
             this.alteraFaseToolStripMenuItem.Name = "alteraFaseToolStripMenuItem";
-            this.alteraFaseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.alteraFaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.alteraFaseToolStripMenuItem.Text = "Altera Fase";
             this.alteraFaseToolStripMenuItem.Click += new System.EventHandler(this.alteraFaseToolStripMenuItem_Click);
             // 
             // lotesToolStripMenuItem
             // 
             this.lotesToolStripMenuItem.Name = "lotesToolStripMenuItem";
-            this.lotesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.lotesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lotesToolStripMenuItem.Text = "Lotes";
             this.lotesToolStripMenuItem.Click += new System.EventHandler(this.lotesToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(163, 22);
-            this.toolStripMenuItem2.Text = "2";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
             // 
             // desenhoToolStripMenuItem
             // 
@@ -288,22 +279,6 @@ namespace TeklaArtigosOfeliz
             this.imprimirDesenhosToolStripMenuItem.Text = "Imprimir Desenhos";
             this.imprimirDesenhosToolStripMenuItem.Click += new System.EventHandler(this.imprimirDesenhosToolStripMenuItem_Click);
             // 
-            // exportarToolStripMenuItem
-            // 
-            this.exportarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportarNC1ToolStripMenuItem});
-            this.exportarToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
-            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(73, 21);
-            this.exportarToolStripMenuItem.Text = "Exportar";
-            // 
-            // exportarNC1ToolStripMenuItem
-            // 
-            this.exportarNC1ToolStripMenuItem.Name = "exportarNC1ToolStripMenuItem";
-            this.exportarNC1ToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
-            this.exportarNC1ToolStripMenuItem.Text = "Exportar e conversor de NC1";
-            this.exportarNC1ToolStripMenuItem.Click += new System.EventHandler(this.exportarNC1ToolStripMenuItem_Click);
-            // 
             // utilitariosToolStripMenuItem
             // 
             this.utilitariosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -319,6 +294,13 @@ namespace TeklaArtigosOfeliz
             this.utilitariosToolStripMenuItem.Name = "utilitariosToolStripMenuItem";
             this.utilitariosToolStripMenuItem.Size = new System.Drawing.Size(78, 21);
             this.utilitariosToolStripMenuItem.Text = "Utilitarios";
+            // 
+            // abrirPastasToolStripMenuItem
+            // 
+            this.abrirPastasToolStripMenuItem.Name = "abrirPastasToolStripMenuItem";
+            this.abrirPastasToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
+            this.abrirPastasToolStripMenuItem.Text = "Abrir Pastas";
+            this.abrirPastasToolStripMenuItem.Click += new System.EventHandler(this.abrirPastasToolStripMenuItem_Click);
             // 
             // abrirObraToolStripMenuItem
             // 
@@ -361,6 +343,22 @@ namespace TeklaArtigosOfeliz
             this.atualizarEmialsToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
             this.atualizarEmialsToolStripMenuItem.Text = "Atualizar Email\'s";
             this.atualizarEmialsToolStripMenuItem.Click += new System.EventHandler(this.atualizarEmialsToolStripMenuItem_Click);
+            // 
+            // exportarToolStripMenuItem
+            // 
+            this.exportarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportarNC1ToolStripMenuItem});
+            this.exportarToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
+            this.exportarToolStripMenuItem.Size = new System.Drawing.Size(73, 21);
+            this.exportarToolStripMenuItem.Text = "Exportar";
+            // 
+            // exportarNC1ToolStripMenuItem
+            // 
+            this.exportarNC1ToolStripMenuItem.Name = "exportarNC1ToolStripMenuItem";
+            this.exportarNC1ToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
+            this.exportarNC1ToolStripMenuItem.Text = "Exportar e conversor de NC1";
+            this.exportarNC1ToolStripMenuItem.Click += new System.EventHandler(this.exportarNC1ToolStripMenuItem_Click);
             // 
             // EmailStripMenuItem1
             // 
@@ -479,13 +477,6 @@ namespace TeklaArtigosOfeliz
             this.label4.Size = new System.Drawing.Size(0, 17);
             this.label4.TabIndex = 92;
             // 
-            // abrirPastasToolStripMenuItem
-            // 
-            this.abrirPastasToolStripMenuItem.Name = "abrirPastasToolStripMenuItem";
-            this.abrirPastasToolStripMenuItem.Size = new System.Drawing.Size(285, 22);
-            this.abrirPastasToolStripMenuItem.Text = "Abrir Pastas";
-            this.abrirPastasToolStripMenuItem.Click += new System.EventHandler(this.abrirPastasToolStripMenuItem_Click);
-            // 
             // Frm_Inico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -562,7 +553,6 @@ namespace TeklaArtigosOfeliz
         private ToolStripMenuItem ativarPropriedadesAntigasToolStripMenuItem1;
         private ToolStripMenuItem atualizarEmialsToolStripMenuItem;
         private ToolStripMenuItem imprimirDesenhosToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem2;
         private ToolStripMenuItem abrirPastasToolStripMenuItem;
     }
 }
