@@ -1,20 +1,23 @@
-﻿using System;
+﻿using SautinSoft;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Tekla.Structures.Model;
+using WindowsInput;
+using WindowsInput.Native;
+using static SautinSoft.HtmlToRtf;
 using Image = System.Drawing.Image;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Point = Tekla.Structures.Geometry3d.Point;
 using TSM = Tekla.Structures.Model;
-using static SautinSoft.HtmlToRtf;
-using SautinSoft;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
 
 
 
@@ -648,76 +651,6 @@ namespace TeklaArtigosOfeliz
 
 
         }
-        public class AppAbrirPrimavera
-        {
-            [DllImport("user32.dll")]
-            public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-            [DllImport("user32.dll")]
-            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-            [DllImport("user32.dll")]
-            public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
-
-            const int SW_RESTORE = 9;
-
-            public void AbrirPrimaveira()
-            {
-                try
-                {
-                    string nomeProcesso = "Erp100EV";
-                    string appPath = @"C:\Program Files (x86)\PRIMAVERA_EVO\SG100\Apl\Erp100EV.exe";
-
-                    var processos = Process.GetProcessesByName(nomeProcesso);
-
-                    if (processos.Length > 0)
-                    {
-                        var processoExistente = processos[0];
-                        IntPtr hWnd = processoExistente.MainWindowHandle;
-
-                        if (hWnd != IntPtr.Zero)
-                        {
-                            ShowWindow(hWnd, SW_RESTORE);
-                            SetForegroundWindow(hWnd);
-                        }
-                        else
-                        {
-                            // Tenta usar o método alternativo
-                            SwitchToThisWindow(processoExistente.Handle, true);
-                        }
-                    }
-                    else
-                    {
-                        if (File.Exists(appPath))
-                        {
-                            var processoNovo = Process.Start(appPath);
-                            processoNovo.WaitForInputIdle(); // Espera a janela
-
-                            IntPtr hWnd = processoNovo.MainWindowHandle;
-
-                            if (hWnd != IntPtr.Zero)
-                            {
-                                ShowWindow(hWnd, SW_RESTORE);
-                                SetForegroundWindow(hWnd);
-                            }
-                            else
-                            {
-                                MessageBox.Show("Primavera iniciado, mas não foi possível aceder à janela principal.");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("O Primavera não foi encontrado no PC.");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao tentar abrir o Primavera: " + ex.Message);
-                }
-            }
-        }
-
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
@@ -964,7 +897,7 @@ namespace TeklaArtigosOfeliz
 
                 System.Threading.Tasks.Task.Delay(2000).Wait();
 
-                DialogResult resultadoPrimavera = MessageBox.Show(this, "Quer importar no Primavera?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult resultadoPrimavera = MessageBox.Show(this, "Pretende Abrir o Primavera?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (resultadoPrimavera == DialogResult.Yes)
                 {
@@ -977,24 +910,30 @@ namespace TeklaArtigosOfeliz
                     ExportIFCPlugin exportPlugin = new ExportIFCPlugin();
                     exportPlugin.Run(obra, quantificacaoMaterial);
 
-                    System.Threading.Tasks.Task.Delay(5000).Wait();
-                    Chb_alw_top.Checked = true;
+                    System.Threading.Tasks.Task.Delay(7000).Wait();
+                    DialogResult resultadopowefab = MessageBox.Show(this, "Pretende Gerar Aprovisionamento do Powerfab?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (resultadopowefab == DialogResult.Yes)
+                    {
+                        Chb_alw_top.Checked = true;
+                        string nobra = label11.Text.Trim();
+                        CreatePowerfab(nobra);
+                        AppAbrirTeklanovo teklaHandler = new AppAbrirTeklanovo();
+                        teklaHandler.TrazerTeklaParaFrente();
+                    }
+                    else
+                    { }
+                                       
+                    System.Threading.Tasks.Task.Delay(7000).Wait();
                     DialogResult resultadoEmail = MessageBox.Show(this, "Pretende Criar Email?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (resultadoEmail == DialogResult.Yes)
                     {
                         OpenEmailPreviewAndCreateEmail();
-
                     }
                     else
                     { }
                 }
                 else
                 { }
-
-               
-
-
-
             }
         }
 
@@ -1046,8 +985,199 @@ namespace TeklaArtigosOfeliz
                 CbRequesitos.Text = "";
             }
         }
+               
+        public void CreatePowerfab(string numeroObra)
+        {
+            string ano = "20" + numeroObra.Substring(0, 2);
+            string caminho1 = @"\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\";
+            string caminho2 = Path.Combine(caminho1, ano, numeroObra, "1.8 Projeto", "1.8.2 Tekla");
 
-        private void button9_Click(object sender, EventArgs e)
+            if (!Directory.Exists(caminho2))
+            {
+                MessageBox.Show($"A pasta '{caminho2}' não existe.");
+                return;
+            }
+
+            string[] subpastas = Directory.GetDirectories(caminho2);
+            if (subpastas.Length == 0)
+            {
+                MessageBox.Show($"Nenhuma subpasta encontrada em '{caminho2}'.");
+                return;
+            }
+
+            string primeiraPasta = subpastas[0];
+            string caminho3 = Path.Combine(primeiraPasta, "attributes");
+            Directory.CreateDirectory(caminho3);
+            string filePath = Path.Combine(caminho3, $"Aprovisionamento.powerfabexport.json");
+
+            if (File.Exists(filePath))
+            {
+                return;
+            }
+
+            var jsonPrincipal = $@" {{
+                                      ""DialogType"": ""export.common"",
+                                      ""IsEstimatingChecked"": false,
+                                      ""IsProcurementChecked"": true,
+                                      ""IsDrawingsForApprovalChecked"": false,
+                                      ""IsProductionControlChecked"": false,
+                                      ""SelectedEstimatingItemName"": ""standard"",
+                                      ""SelectedProcurementItemName"": ""standard"",
+                                      ""SelectedDrawingsForApprovalItemName"": ""standard"",
+                                      ""SelectedProductionControlItemName"": ""standard"",
+                                      ""SelectionTypeIndexForEstimating"": 1,
+                                      ""SelectionTypeIndexForProcurement"": 1,
+                                      ""SelectionTypeIndexForDrawingsForApproval"": 0,
+                                      ""SelectionTypeIndexForProductionControl"": 1,
+                                      ""SelectedSharingUploadOptionIndex"": 0,
+                                      ""SelectedTrimbleConnectFolder"": """",                                      
+                                      ""Folder"": "".\\05Exportado\\Tekla_PowerFab"",
+                                      ""TargetFileName"": ""Q000"",
+                                      ""FileNameSuffix"": """",
+                                      ""FileNameTemplateData"": """",
+                                      ""LocationByGuid"": ""0ff713ca-2fe9-497a-9534-92e0f76108a2""
+                                    }}";
+            try
+            {
+                File.WriteAllText(filePath, jsonPrincipal);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao criar o ficheiro JSON: {ex.Message}");
+            }
+        }
+       
+        public class AppAbrirTeklanovo
+        {
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern IntPtr GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern IntPtr GetForegroundWindow();
+
+            [DllImport("user32.dll")]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+            const int SW_RESTORE = 5;
+
+            public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+            public void TrazerTeklaParaFrente()
+            {
+                EnumWindows(new EnumWindowsProc(EnumWindowCallback), IntPtr.Zero);
+            }
+
+            private bool EnumWindowCallback(IntPtr hWnd, IntPtr lParam)
+            {
+                StringBuilder windowTitle = new StringBuilder(256);
+                GetWindowText(hWnd, windowTitle, 256);
+
+                if (windowTitle.ToString().StartsWith("Tekla Structures"))
+                {
+                    ShowWindow(hWnd, SW_RESTORE);
+                    SetForegroundWindow(hWnd);
+                    SimularTeclas();
+                    return false;
+                }
+
+                return true;
+            }
+
+            private void SimularTeclas()
+            {
+                var simulator = new InputSimulator();
+                simulator.Keyboard.ModifiedKeyStroke(new[] { VirtualKeyCode.CONTROL, VirtualKeyCode.SHIFT }, VirtualKeyCode.F11);
+            }
+        }
+        public class AppAbrirPrimavera
+        {
+            [DllImport("user32.dll")]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+            const int SW_RESTORE = 9;
+
+            public void AbrirPrimaveira()
+            {
+                try
+                {
+                    string nomeProcesso = "Erp100EV";
+                    string appPath = @"C:\Program Files (x86)\PRIMAVERA_EVO\SG100\Apl\Erp100EV.exe";
+
+                    Process[] processos = Process.GetProcessesByName(nomeProcesso);
+
+                    if (processos.Length > 0)
+                    {
+                        Process processoExistente = processos[0];
+
+                        IntPtr hWnd = processoExistente.MainWindowHandle;
+
+                        if (hWnd != IntPtr.Zero)
+                        {
+                            ShowWindow(hWnd, SW_RESTORE);
+                            SetForegroundWindow(hWnd);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Primavera já está aberto, mas não foi possível aceder à janela principal.");
+                        }
+                    }
+                    else
+                    {
+                        if (System.IO.File.Exists(appPath))
+                        {
+                            Process processoNovo = Process.Start(appPath);
+
+                            Thread.Sleep(1000);
+
+                            IntPtr hWnd = processoNovo.MainWindowHandle;
+
+                            if (hWnd != IntPtr.Zero)
+                            {
+                                ShowWindow(hWnd, SW_RESTORE);
+                                SetForegroundWindow(hWnd);
+                            }
+                            else
+                            {
+                                //MessageBox.Show("Primavera iniciado, mas não foi possível aceder à janela principal.");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("O Primavera não foi encontrado no PC.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao tentar abrir o Primavera: " + ex.Message);
+                }
+            }
+        }
+
+        private void guna2Button7_Click(object sender, EventArgs e)
+        {
+            Guardartextbox1();
+            Chb_alw_top.Checked = false;
+            AppAbrirPrimavera primaveraHandler = new AppAbrirPrimavera();
+            primaveraHandler.AbrirPrimaveira();
+        }
+        private void guna2Button8_Click(object sender, EventArgs e)
+        {
+            string nobra = label11.Text.Trim();
+            CreatePowerfab(nobra);
+            AppAbrirTeklanovo teklaHandler = new AppAbrirTeklanovo();
+            teklaHandler.TrazerTeklaParaFrente();
+        }        
+        private void button9_Click_1(object sender, EventArgs e)
         {
             Guardartextbox1();
 

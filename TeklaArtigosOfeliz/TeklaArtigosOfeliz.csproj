@@ -428,12 +428,6 @@
     <Compile Include="Frm_Corpo_de_Texto_Email_Enviar_Para_Lotear.Designer.cs">
       <DependentUpon>Frm_Corpo_de_Texto_Email_Enviar_Para_Lotear.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frm_Corpo_de_Texto_Email_Enviar_Powerfab.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Frm_Corpo_de_Texto_Email_Enviar_Powerfab.Designer.cs">
-      <DependentUpon>Frm_Corpo_de_Texto_Email_Enviar_Powerfab.cs</DependentUpon>
-    </Compile>
     <Compile Include="Frm_Corpo_de_Texto_Email_Fabrico.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -656,9 +650,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Corpo_de_Texto_Email_Enviar_Para_Lotear.resx">
       <DependentUpon>Frm_Corpo_de_Texto_Email_Enviar_Para_Lotear.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Frm_Corpo_de_Texto_Email_Enviar_Powerfab.resx">
-      <DependentUpon>Frm_Corpo_de_Texto_Email_Enviar_Powerfab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Corpo_de_Texto_Email_Fabrico.resx">
       <DependentUpon>Frm_Corpo_de_Texto_Email_Fabrico.cs</DependentUpon>

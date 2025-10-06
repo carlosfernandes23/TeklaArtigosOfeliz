@@ -6,32 +6,34 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Printing;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web.UI.WebControls.WebParts;
 using System.Windows.Forms;
 using Tekla.Structures.Drawing;
 using Tekla.Structures.Filtering;
 using Tekla.Structures.Filtering.Categories;
+using Tekla.Structures.InpParser;
 using Tekla.Structures.Model;
-using static TeklaArtigosOfeliz.Frm_Quantificacao;
-using TSM = Tekla.Structures.Model;
-using Outlook = Microsoft.Office.Interop.Outlook;
-using Image = System.Drawing.Image;
 using Tekla.Structures.Model.Operations;
-using Tekla.Structures.Plugins;
 using Tekla.Structures.Model.UI;
-using Point = Tekla.Structures.Geometry3d.Point;
-using static Tekla.Structures.Filtering.Categories.PartFilterExpressions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Tekla.Structures.Plugins;
 using WindowsInput;
 using WindowsInput.Native;
-using System.Text;
-using TeklaModel = Tekla.Structures.Model.Model;
-using Tekla.Structures.InpParser;
-using System.Web.UI.WebControls.WebParts;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static Tekla.Structures.Filtering.Categories.PartFilterExpressions;
+using static TeklaArtigosOfeliz.Frm_Quantificacao;
 using static TheArtOfDevHtmlRenderer.Adapters.RGraphicsPath;
+using Image = System.Drawing.Image;
+using Outlook = Microsoft.Office.Interop.Outlook;
+using Point = Tekla.Structures.Geometry3d.Point;
+using TeklaModel = Tekla.Structures.Model.Model;
+using TSM = Tekla.Structures.Model;
+using System.Net.Mail;
 
 
 namespace TeklaArtigosOfeliz
@@ -554,414 +556,6 @@ namespace TeklaArtigosOfeliz
             }
            
         }
-
-
-        public class AppAbrirTekla
-        {
-            [DllImport("user32.dll", SetLastError = true)]
-            public static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
-
-            [DllImport("user32.dll", SetLastError = true)]
-            public static extern IntPtr GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-            [DllImport("user32.dll", SetLastError = true)]
-            public static extern IntPtr GetForegroundWindow();
-
-            [DllImport("user32.dll")]
-            public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-            [DllImport("user32.dll")]
-            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-            const int SW_RESTORE = 5;
-
-            public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-
-            public void TrazerTeklaParaFrente()
-            {
-                EnumWindows(new EnumWindowsProc(EnumWindowCallback), IntPtr.Zero);
-            }
-
-            private bool EnumWindowCallback(IntPtr hWnd, IntPtr lParam)
-            {
-                StringBuilder windowTitle = new StringBuilder(256);
-                GetWindowText(hWnd, windowTitle, 256);
-
-                if (windowTitle.ToString().StartsWith("Tekla Structures"))
-                {
-                    ShowWindow(hWnd, SW_RESTORE);
-                    SetForegroundWindow(hWnd);
-                    SimularTeclas();
-                    return false;
-                }
-
-                return true;
-            }
-
-            private void SimularTeclas()
-            {
-                var simulator = new InputSimulator();
-                simulator.Keyboard.ModifiedKeyStroke(new[] { VirtualKeyCode.CONTROL, VirtualKeyCode.SHIFT }, VirtualKeyCode.F3);
-            }
-        }
-
-        //public class AppAbrirPrimavera
-        //{
-
-        //    [DllImport("user32.dll")]
-        //    public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        //    [DllImport("user32.dll")]
-        //    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        //    const int SW_RESTORE = 9;
-
-        //    public void AbrirPrimaveira()
-        //    {
-        //        try
-        //        {
-
-        //            string appPath = @"C:\Program Files (x86)\PRIMAVERA\SG900\Apl\Erp900LE.exe";
-
-        //            if (System.IO.File.Exists(appPath))
-        //            {
-        //                Process process = Process.Start(appPath);
-
-        //                Thread.Sleep(1000);
-
-        //                IntPtr hWnd = process.MainWindowHandle;
-
-        //                if (hWnd != IntPtr.Zero)
-        //                {
-        //                    ShowWindow(hWnd, SW_RESTORE);
-
-        //                    SetForegroundWindow(hWnd);
-        //                }
-        //                else
-        //                {
-        //                    MessageBox.Show("Não foi possível obter a janela do aplicativo.");
-        //                }
-        //            }
-        //            else
-        //            {
-        //                MessageBox.Show("O Primavera não foi encontrado no Pc.");
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("Erro ao tentar abrir o Primavera: " + ex.Message);
-        //        }
-        //    }
-        //}
-
-        public class AppAbrirPrimavera
-        {
-            [DllImport("user32.dll")]
-            public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-            [DllImport("user32.dll")]
-            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-            const int SW_RESTORE = 9;
-
-            public void AbrirPrimaveira()
-            {
-                try
-                {
-                    string nomeProcesso = "Erp100EV"; 
-                    string appPath = @"C:\Program Files (x86)\PRIMAVERA_EVO\SG100\Apl\Erp100EV.exe";
-
-                    Process[] processos = Process.GetProcessesByName(nomeProcesso);
-
-                    if (processos.Length > 0)
-                    {
-                        Process processoExistente = processos[0];
-
-                        IntPtr hWnd = processoExistente.MainWindowHandle;
-
-                        if (hWnd != IntPtr.Zero)
-                        {
-                            ShowWindow(hWnd, SW_RESTORE);       
-                            SetForegroundWindow(hWnd);          
-                        }
-                        else
-                        {
-                            MessageBox.Show("Primavera já está aberto, mas não foi possível aceder à janela principal.");
-                        }
-                    }
-                    else
-                    {
-                        if (System.IO.File.Exists(appPath))
-                        {
-                            Process processoNovo = Process.Start(appPath);
-
-                            Thread.Sleep(1000); 
-
-                            IntPtr hWnd = processoNovo.MainWindowHandle;
-
-                            if (hWnd != IntPtr.Zero)
-                            {
-                                ShowWindow(hWnd, SW_RESTORE);
-                                SetForegroundWindow(hWnd);
-                            }
-                            else
-                            {
-                                //MessageBox.Show("Primavera iniciado, mas não foi possível aceder à janela principal.");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("O Primavera não foi encontrado no PC.");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao tentar abrir o Primavera: " + ex.Message);
-                }
-            }
-        }
-
-
-        public void CreateXmlFile(string numeroObra)
-        {
-
-            string ano = "20" + numeroObra.Substring(0, 2);
-            string caminho1 = @"\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\";
-            string caminho2 = Path.Combine(caminho1, ano, numeroObra, "1.8 Projeto", "1.8.2 Tekla");
-
-            string[] subpastas = Directory.GetDirectories(caminho2);
-            if (subpastas.Length == 0)
-            {
-                Console.WriteLine("Nenhuma subpasta encontrada em " + caminho2);
-                return;
-            }
-
-            string primeiraPasta = subpastas[0];
-
-            string caminho3 = Path.Combine(primeiraPasta, "attributes");
-
-            Directory.CreateDirectory(caminho1);
-            Directory.CreateDirectory(caminho2);
-            Directory.CreateDirectory(primeiraPasta);
-            Directory.CreateDirectory(caminho3);
-
-            string filePath = Path.Combine(caminho3, $"{numeroObra}.TeklaPowerFabPluginSettings.xml");
-
-            if (File.Exists(filePath))
-            {
-                return;
-            }
-
-            string xmlContent = $@"
-            <FabSuiteTeklaDataExchangeSettings xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""http://www.fabsuite.com/XML_Schemas/FabSuiteTeklaDataExchangeSettings0100.xsd"">
-            <LastSettings>
-            <LastAction>Export</LastAction>
-            <LastImportSettings>
-            <ImportFilename/>
-            <ReadStatusOf>DrawingsMainMembers</ReadStatusOf>
-            <ImportApprovalStatus>true</ImportApprovalStatus>
-            <ImportAssemblyStatus>true</ImportAssemblyStatus>
-            <ImportDateIssued>true</ImportDateIssued>
-            <ImportShopStatus>true</ImportShopStatus>
-            <ImportDateFabricationCompleted>true</ImportDateFabricationCompleted>
-            <ImportLoadNumber>true</ImportLoadNumber>
-            <ImportLoadStatus>true</ImportLoadStatus>
-            <ImportPONumber>true</ImportPONumber>
-            <ImportVendor>true</ImportVendor>
-            <ImportHeatNumber>true</ImportHeatNumber>
-            <ImportDateDue>true</ImportDateDue>
-            <ImportDateReceived>true</ImportDateReceived>
-            </LastImportSettings>
-            <LastExportSettings>
-            <ExportFilename>.\Tekla PowerFab\{numeroObra}_L0_F0_R0.zip</ExportFilename>
-            <ExportFilenameExtension>.zip</ExportFilenameExtension>
-            <AutoGenerateFilename>false</AutoGenerateFilename>
-            <ExportDrawings>SelectedFromDrawingList</ExportDrawings>
-            <ExportDrawingsOnlySkipAssemblies>false</ExportDrawingsOnlySkipAssemblies>
-            <IncludeSinglePartDrawings>true</IncludeSinglePartDrawings>
-            <IncludeGeneralArrangementDrawings>false</IncludeGeneralArrangementDrawings>
-            <IncludeMultiDrawings>false</IncludeMultiDrawings>
-            <ExportDrawingUserDefinedFields>ExportUDAsFromBoth</ExportDrawingUserDefinedFields>
-            <ExportPartUserDefinedFields>ExportUDAsFromBoth</ExportPartUserDefinedFields>
-            <IncludeBoltsNutsWashers>false</IncludeBoltsNutsWashers>
-            <ExportBoltNutWasherUserDefinedFields>DontExportUDAs</ExportBoltNutWasherUserDefinedFields>
-            <IncludeStuds>false</IncludeStuds>
-            <ExportStudUserDefinedFields>DontExportUDAs</ExportStudUserDefinedFields>
-            <CNCFiles>UseCNCFilesFromDirectory</CNCFiles>
-            <CNCSettings>standard</CNCSettings>
-            <CNCDirectory>\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\{ano}\{numeroObra}\1.9 Gestão de fabrico</CNCDirectory>
-            <DrawingFiles>UseDrawingFilesFromDirectory</DrawingFiles>
-            <DrawingDirectory>\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\{ano}\{numeroObra}\1.9 Gestão de fabrico</DrawingDirectory>
-            <AssemblyFileDirectory>\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\{ano}\{numeroObra}\1.9 Gestão de fabrico</AssemblyFileDirectory>
-            <PartFileDirectory>\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\{ano}\{numeroObra}\1.9 Gestão de fabrico</PartFileDirectory>
-            <GAFileDirectory>.\01Desenhos\Geral</GAFileDirectory>
-            <MultiFileDirectory>.\01Desenhos\Multi</MultiFileDirectory>
-            <CompressOutput>true</CompressOutput>
-            <OldBoltShapeLogic>false</OldBoltShapeLogic>
-            <ConvertPartDelimiterToUnderscore>false</ConvertPartDelimiterToUnderscore>
-            </LastExportSettings>
-            </LastSettings>
-            </FabSuiteTeklaDataExchangeSettings>";
-
-            try
-            {
-                File.WriteAllText(filePath, xmlContent);
-                MessageBox.Show(this, $"Ficheiro XML criado com sucesso na obra. {numeroObra}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, $"Erro ao criar o arquivo XML: {ex.Message}");
-            }
-
-
-        }
-
-
-        public void EnviarPowerFab_OpenEmailPreviewAndCreateEmail()
-        {
-            string SubjectEnviarPowerFab = string.Empty;
-            string lote = string.Empty; 
-            string Fase = string.Empty;
-            string Revisao = string.Empty;
-
-            try
-                {
-
-                Model modelo = new Model();
-                string nomeProjeto = modelo.GetProjectInfo().Name;
-                string obra = modelo.GetProjectInfo().ProjectNumber;
-                string modelPath = modelo.GetInfo().ModelPath;
-                DirectoryInfo up = new DirectoryInfo(modelPath);
-                string ultimaPasta = up.Name;
-                string caminho = modelPath + "\\Tekla PowerFab";
-                string nomePastaMaisRecente = string.Empty;
-
-                string imagemOfelizFilePath = @"\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\4 Produção\Desenvolvimentos\Ficheiros Temp tekla artigos (Nao Apagar)\ofeliz_logo.png";
-
-                string nomeUsuario = Environment.UserName;
-
-                nomeUsuario = nomeUsuario.Replace('.', ' ');
-                nomeUsuario = string.Join(" ", nomeUsuario.Split(' ').Select(p => char.ToUpper(p[0]) + p.Substring(1).ToLower()));
-
-                
-
-                if (Directory.Exists(caminho))
-                {
-                    string[] arquivosZip = Directory.GetFiles(caminho, "*.zip");
-
-                    if (arquivosZip.Length > 0)
-                    {
-                        var arquivoMaisRecente = arquivosZip
-                            .OrderByDescending(f => new FileInfo(f).CreationTime)
-                            .First();
-
-                        nomePastaMaisRecente = Path.GetFileName(arquivoMaisRecente);
-                        DateTime dataCriacaoMaisRecente = new FileInfo(arquivoMaisRecente).CreationTime;
-                        DateTime dataAtual = DateTime.Now.Date; 
-
-                        if (dataCriacaoMaisRecente.Date == dataAtual)
-                        {
-                            //MessageBox.Show("A pasta mais recente criada dentro de 'Tekla PowerFab' é: " + nomePastaMaisRecente + "\nA versão do PowerFab é antiga.");
-                        }
-                        else
-                        {
-                            MessageBox.Show(this, "Atenção: A pasta do Poerfab dentro da pasta não corresponde a data de hoje:" + nomePastaMaisRecente);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show(this, "Não Existe Arquivos .zip dentro de 'Tekla PowerFab'.");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(this, $"A pasta '{caminho}' não existe.");
-                }
-                if (!string.IsNullOrEmpty(nomePastaMaisRecente))
-                {
-                    string pattern = @"L(\d+).*F(\d+).*R(\d+)";
-
-                    Match match = Regex.Match(nomePastaMaisRecente, pattern);
-
-                    if (match.Success)
-                    {
-                        lote = match.Groups[1].Value;  
-                        Fase = match.Groups[2].Value; 
-                        Revisao = match.Groups[3].Value;  
-
-                    }
-                    else
-                    {
-                        MessageBox.Show(this, "Não foi possível localizar os números de Lote, Fase e Revisão na pasta do PowerFab");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(this, "Não foi possível determinar o nome da pasta mais recente.");
-                }
-
-                ultimaPasta = ultimaPasta.Replace("_", "-");
-                SubjectEnviarPowerFab = ultimaPasta + " -- PowerFab";
-
-                string Total = obra + "_L" + lote + "_F" + Fase + ".zip";
-                string linkTexto = ".\\Tekla PowerFab\\" + Total;
-
-                string saudacao = GetSaudacao();
-
-                string corpoEmail = "<html><body contenteditable=\"false\">";
-                corpoEmail += "<font face = 'Calibri ' size = '3' > <p>" + saudacao + "</font></p>";
-
-                corpoEmail += "<font face='Calibri ' size='3'><p>Venho por este meio informar, que já foi emitido dentro da pasta da obra em assunto, o PowerFab &nbsp;"
-                             + "<span style='color:#00B0F0; display:inline-block; margin-right:10px;'><u>"
-                             + obra + "&nbsp Lote " + lote + "&nbsp Fase " + Fase + "</font></u> </span></p>";
-
-
-                corpoEmail += "<font face = 'Calibri ' size = '3' ><p><b><u> PROCESSO DE FABRICO: </u></b>";
-
-                corpoEmail += "<font face = 'Calibri ' size = '3' style='color:#5B9BD5;'>"
-                           + "<a href='file:///" + caminho.Replace("\\", "/") + "' style='color:#5B9BD5; text-decoration: none;'>" + linkTexto + "</a>" + "</font> ";
-
-
-                corpoEmail += "<font face = 'Calibri ' size = '3' > <p> Melhores Cumprimentos,</p> </font> <br>";
-                corpoEmail += "<font face = 'Calibri' size = '3' > <b>" + nomeUsuario + "</b> </Font> <br>";
-                corpoEmail += "<font face = 'Calibri' size = '3' > Construção Metálica | Preparador </Font> <br>";
-                corpoEmail += "<font face = 'Calibri' size = '3' > T + 351 253 080 609 * </font> <br>";
-                corpoEmail += "<font color='red' font face = 'Calibri ' size = '3'> ofeliz.com </font> <br>";
-                corpoEmail += "<p><a href='https://www.ofeliz.com'><img src='file:///" + imagemOfelizFilePath.Replace("\\", "/") + "' width='127' height='34'></a></p>";
-
-                corpoEmail += "<i><font color='Light grey' font face = 'Calibri ' size = '1.5'> Alvará Nº 10553 – Pub. *Chamada para a rede fixa nacional. </font> </i><br>";
-                corpoEmail += "<i><font color='green' font face = 'Calibri ' size = '1.5'> Antes de imprimir este e-mail tenha em consideração o meio ambiente. </font> </i><br>";
-                corpoEmail += "</body></html>";
-
-
-                this.Visible = false;
-                Frm_Corpo_de_Texto_Email_Enviar_Powerfab previewForm = new Frm_Corpo_de_Texto_Email_Enviar_Powerfab("Enviar Email do Powerfab", corpoEmail, SubjectEnviarPowerFab, caminho, obra, lote, Fase, linkTexto);
-                previewForm.ShowDialog(this);
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, "Erro ao abrir a Ferramenta de Recorte ou enviar o e-mail: " + ex.Message);
-            }
-        }
-
-        private string GetSaudacao()
-        {
-            DateTime horaAtual = DateTime.Now;
-            if (horaAtual.Hour < 12 || (horaAtual.Hour == 12 && horaAtual.Minute < 30))
-            {
-                return "Bom Dia, ";
-            }
-            else
-            {
-                return "Boa Tarde, ";
-            }
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {        }
-             
 
         public static void AlteraPrefixo(ArrayList peças)
         {
@@ -1567,42 +1161,29 @@ namespace TeklaArtigosOfeliz
             }
         }
 
-
-
         public void button1_Click_1(object sender, EventArgs e)
         {
             TopMost = false;
             AppAbrirPrimavera primaveraHandler = new AppAbrirPrimavera();
             primaveraHandler.AbrirPrimaveira();
-        }
-
-        
+        }       
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
             string numeroObra = label11.Text;
-            CreateXmlFile(numeroObra);
-            AppAbrirTekla teklaHandler = new AppAbrirTekla();
-            teklaHandler.TrazerTeklaParaFrente();
-
-            DialogResult resultado = MessageBox.Show(this, "O Powerfab foi gerado?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-           if (resultado == DialogResult.Yes)
-           {
-             EnviarPowerFab_OpenEmailPreviewAndCreateEmail();            
-           }
+            CreatePowerfabFabrico(numeroObra);
+            CreatePowerfab(numeroObra);
+            AppAbrirTeklanovo teklaHandler = new AppAbrirTeklanovo();
+            teklaHandler.TrazerTeklaParaFrente();          
         }
-
         private void Frm_CriarFase_FormClosed(object sender, FormClosedEventArgs e)
         {
             listBox1.Items.Clear();
         }
-
         private void guna2Button2_Click_1(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
         }
-
         private void GrauprepeClasseex()
         {
             string Classeex = string.Empty;
@@ -1670,7 +1251,253 @@ namespace TeklaArtigosOfeliz
             catch (Exception ex)
             {      }
         }
+        public void CreatePowerfab(string numeroObra)
+        {
+            string ano = "20" + numeroObra.Substring(0, 2);
+            string caminho1 = @"\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\";
+            string caminho2 = Path.Combine(caminho1, ano, numeroObra, "1.8 Projeto", "1.8.2 Tekla");
 
-    }
+            if (!Directory.Exists(caminho2))
+            {
+                MessageBox.Show($"A pasta '{caminho2}' não existe.");
+                return;
+            }
+
+            string[] subpastas = Directory.GetDirectories(caminho2);
+            if (subpastas.Length == 0)
+            {
+                MessageBox.Show($"Nenhuma subpasta encontrada em '{caminho2}'.");
+                return;
+            }
+
+            string primeiraPasta = subpastas[0];
+            string caminho3 = Path.Combine(primeiraPasta, "attributes");
+            Directory.CreateDirectory(caminho3);
+            string filePath = Path.Combine(caminho3, $"Fabrico.powerfabexport.json");
+
+            if (File.Exists(filePath))
+            {
+                return;
+            }
+
+            var jsonPrincipal = $@" {{
+                                      ""DialogType"": ""export.common"",
+                                      ""IsEstimatingChecked"": false,
+                                      ""IsProcurementChecked"": false,
+                                      ""IsDrawingsForApprovalChecked"": false,
+                                      ""IsProductionControlChecked"": true,
+                                      ""SelectedEstimatingItemName"": ""standard"",
+                                      ""SelectedProcurementItemName"": ""standard"",
+                                      ""SelectedDrawingsForApprovalItemName"": ""standard"",
+                                      ""SelectedProductionControlItemName"": ""Fabrico_Settings"",
+                                      ""SelectionTypeIndexForEstimating"": 1,
+                                      ""SelectionTypeIndexForProcurement"": 0,
+                                      ""SelectionTypeIndexForDrawingsForApproval"": 0,
+                                      ""SelectionTypeIndexForProductionControl"": 2,
+                                      ""SelectedSharingUploadOptionIndex"": 0,
+                                      ""SelectedTrimbleConnectFolder"": """",                                      
+                                      ""Folder"": "".\\05Exportado\\Tekla_PowerFab"",
+                                      ""TargetFileName"": ""L1_F1_R0"",
+                                      ""FileNameSuffix"": """",
+                                      ""FileNameTemplateData"": """",
+                                      ""LocationByGuid"": ""0ff713ca-2fe9-497a-9534-92e0f76108a2""
+                                    }}";
+            try
+            {
+                File.WriteAllText(filePath, jsonPrincipal);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao criar o ficheiro JSON: {ex.Message}");
+            }
+        }
+        public void CreatePowerfabFabrico(string numeroObra)
+        {
+            string ano = "20" + numeroObra.Substring(0, 2);
+            string caminho1 = @"\\marconi\COMPANY SHARED FOLDER\OFELIZ\OFM\2.AN\2.CM\DP\1 Obras\";
+            string caminho2 = Path.Combine(caminho1, ano, numeroObra, "1.8 Projeto", "1.8.2 Tekla");
+
+            if (!Directory.Exists(caminho2))
+            {
+                MessageBox.Show($"A pasta '{caminho2}' não existe.");
+                return;
+            }
+
+            string[] subpastas = Directory.GetDirectories(caminho2);
+            if (subpastas.Length == 0)
+            {
+                MessageBox.Show($"Nenhuma subpasta encontrada em '{caminho2}'.");
+                return;
+            }
+
+            string primeiraPasta = subpastas[0];
+            string caminho3 = Path.Combine(primeiraPasta, "attributes");
+            Directory.CreateDirectory(caminho3);
+            string filePathFabrico = Path.Combine(caminho3, $"Fabrico_Settings.productioncontrol.json");
+
+            if (File.Exists(filePathFabrico))
+            {
+                return;
+            }
+
+            string CaminhoFabrico = $@"\\marconi\\OFELIZ\\OFELIZ\\OFM\\2.AN\\2.CM\\DP\\1 Obras\\{ano}\\{numeroObra}\\1.9 Gestão de fabrico";
+
+            var jsonFabrico = $@"{{
+                                    ""DialogType"": ""export.common"",
+                                    ""SelectedAssemblyDrawingsIncludeOption"": ""IncludeInfoAndPdf"",
+                                    ""SelectedGeneralArrangementDrawingsIncludeOption"": ""DontInclude"",
+                                    ""SelectedMultiDrawingsIncludeOption"": ""DontInclude"",
+                                    ""SelectedSinglePartDrawingsIncludeOption"": ""IncludeInfoAndPdf"",
+                                    ""DrawingUdasIncludeOption"": ""IncludeFromModel"",
+                                    ""AssemblyDrawingsFolder"": ""{CaminhoFabrico}"",
+                                    ""GeneralArrangementDrawingsFolder"": "".\\01Desenhos\\PDF\\"",
+                                    ""MultidrawingsFolder"": "".\\01Desenhos\\PDF\\"",
+                                    ""SinglePartDrawingsFolder"": ""{CaminhoFabrico}"",
+                                    ""IsDrawingsUDAsChecked"": true,
+                                    ""IsPartUDAsChecked"": true,
+                                    ""PartUdasIncludeOption"": ""IncludeFromModel"",
+                                    ""AssemblyUdasIncludeOption"": ""IncludeFromReport"",
+                                    ""BoltNutWasherUdasIncludeOption"": ""IncludeFromModel"",
+                                    ""StudUdasIncludeOption"": ""DontInclude"",
+                                    ""IsBoltsNutsWashersChecked"": true,
+                                    ""IsBoltNutWasherUDAsChecked"": true,
+                                    ""IsStudsChecked"": false,
+                                    ""IsStudUDAsChecked"": false,
+                                    ""IsAssemblyUDAsChecked"": false,
+                                    ""IsDoNotExportCNCFilesChecked"": false,
+                                    ""IsGenerateCNCFilesSettingsChecked"": false,
+                                    ""IsUseCNCFilesFromFolderChecked"": true,
+                                    ""UseCNCFilesFolder"": ""{CaminhoFabrico}"",
+                                    ""CNCFilesSettingsListItemsIndex"": 0
+                                }}";
+
+            try
+            {
+                File.WriteAllText(filePathFabrico, jsonFabrico);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao criar o ficheiro JSON: {ex.Message}");
+            }
+        }
+        public class AppAbrirTeklanovo
+        {
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern IntPtr GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern IntPtr GetForegroundWindow();
+
+            [DllImport("user32.dll")]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+            const int SW_RESTORE = 5;
+
+            public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+            public void TrazerTeklaParaFrente()
+            {
+                EnumWindows(new EnumWindowsProc(EnumWindowCallback), IntPtr.Zero);
+            }
+
+            private bool EnumWindowCallback(IntPtr hWnd, IntPtr lParam)
+            {
+                StringBuilder windowTitle = new StringBuilder(256);
+                GetWindowText(hWnd, windowTitle, 256);
+
+                if (windowTitle.ToString().StartsWith("Tekla Structures"))
+                {
+                    ShowWindow(hWnd, SW_RESTORE);
+                    SetForegroundWindow(hWnd);
+                    SimularTeclas();
+                    return false;
+                }
+
+                return true;
+            }
+
+            private void SimularTeclas()
+            {
+                var simulator = new InputSimulator();
+                simulator.Keyboard.ModifiedKeyStroke(new[] { VirtualKeyCode.CONTROL, VirtualKeyCode.SHIFT }, VirtualKeyCode.F11);
+            }
+        }
+        public class AppAbrirPrimavera
+        {
+            [DllImport("user32.dll")]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+            const int SW_RESTORE = 9;
+
+            public void AbrirPrimaveira()
+            {
+                try
+                {
+                    string nomeProcesso = "Erp100EV";
+                    string appPath = @"C:\Program Files (x86)\PRIMAVERA_EVO\SG100\Apl\Erp100EV.exe";
+
+                    Process[] processos = Process.GetProcessesByName(nomeProcesso);
+
+                    if (processos.Length > 0)
+                    {
+                        Process processoExistente = processos[0];
+
+                        IntPtr hWnd = processoExistente.MainWindowHandle;
+
+                        if (hWnd != IntPtr.Zero)
+                        {
+                            ShowWindow(hWnd, SW_RESTORE);
+                            SetForegroundWindow(hWnd);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Primavera já está aberto, mas não foi possível aceder à janela principal.");
+                        }
+                    }
+                    else
+                    {
+                        if (System.IO.File.Exists(appPath))
+                        {
+                            Process processoNovo = Process.Start(appPath);
+
+                            Thread.Sleep(1000);
+
+                            IntPtr hWnd = processoNovo.MainWindowHandle;
+
+                            if (hWnd != IntPtr.Zero)
+                            {
+                                ShowWindow(hWnd, SW_RESTORE);
+                                SetForegroundWindow(hWnd);
+                            }
+                            else
+                            {
+                                //MessageBox.Show("Primavera iniciado, mas não foi possível aceder à janela principal.");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("O Primavera não foi encontrado no PC.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao tentar abrir o Primavera: " + ex.Message);
+                }
+            }
+        }
+       private void label11_Click(object sender, EventArgs e)
+        { }
+                      
+}
 }
 

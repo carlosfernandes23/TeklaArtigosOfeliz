@@ -54,6 +54,8 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.button123456 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.guna2Button7 = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Button8 = new Guna.UI2.WinForms.Guna2Button();
             this.button9 = new System.Windows.Forms.Button();
             this.guna2CustomGradientPanel2.SuspendLayout();
             this.guna2CustomGradientPanel1.SuspendLayout();
@@ -415,22 +417,71 @@
             this.label5.TabIndex = 101;
             this.label5.Text = "Sempre Visivel";
             // 
+            // guna2Button7
+            // 
+            this.guna2Button7.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.guna2Button7.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button7.BorderColor = System.Drawing.Color.Silver;
+            this.guna2Button7.BorderRadius = 5;
+            this.guna2Button7.BorderThickness = 1;
+            this.guna2Button7.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button7.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button7.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button7.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button7.FillColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.guna2Button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.guna2Button7.ForeColor = System.Drawing.Color.Black;
+            this.guna2Button7.Location = new System.Drawing.Point(488, 178);
+            this.guna2Button7.Margin = new System.Windows.Forms.Padding(0);
+            this.guna2Button7.Name = "guna2Button7";
+            this.guna2Button7.Size = new System.Drawing.Size(54, 25);
+            this.guna2Button7.TabIndex = 103;
+            this.guna2Button7.Text = "Cegid";
+            this.guna2Button7.TextOffset = new System.Drawing.Point(1, -2);
+            this.guna2Button7.Click += new System.EventHandler(this.guna2Button7_Click);
+            // 
+            // guna2Button8
+            // 
+            this.guna2Button8.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button8.BorderColor = System.Drawing.Color.Silver;
+            this.guna2Button8.BorderRadius = 5;
+            this.guna2Button8.BorderThickness = 1;
+            this.guna2Button8.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button8.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button8.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button8.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button8.FillColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.guna2Button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.guna2Button8.ForeColor = System.Drawing.Color.Black;
+            this.guna2Button8.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button8.Image")));
+            this.guna2Button8.ImageOffset = new System.Drawing.Point(1, 0);
+            this.guna2Button8.ImageSize = new System.Drawing.Size(30, 30);
+            this.guna2Button8.Location = new System.Drawing.Point(544, 178);
+            this.guna2Button8.Margin = new System.Windows.Forms.Padding(0);
+            this.guna2Button8.Name = "guna2Button8";
+            this.guna2Button8.Size = new System.Drawing.Size(38, 24);
+            this.guna2Button8.TabIndex = 104;
+            this.guna2Button8.TextOffset = new System.Drawing.Point(-3, -2);
+            this.guna2Button8.Click += new System.EventHandler(this.guna2Button8_Click);
+            // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(582, 173);
+            this.button9.Location = new System.Drawing.Point(585, 350);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(10, 23);
-            this.button9.TabIndex = 102;
+            this.button9.Size = new System.Drawing.Size(2, 2);
+            this.button9.TabIndex = 105;
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.button9.Click += new System.EventHandler(this.button9_Click_1);
             // 
-            // FrmQuantificacao
+            // Frm_Quantificacao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(604, 211);
             this.Controls.Add(this.button9);
+            this.Controls.Add(this.guna2Button8);
+            this.Controls.Add(this.guna2Button7);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button123456);
             this.Controls.Add(this.numericUpDown1);
@@ -457,7 +508,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(620, 250);
             this.MinimumSize = new System.Drawing.Size(620, 250);
-            this.Name = "FrmQuantificacao";
+            this.Name = "Frm_Quantificacao";
             this.Text = "FrmQuantificacao";
             this.Load += new System.EventHandler(this.FrmQuantificacao_Load);
             this.guna2CustomGradientPanel2.ResumeLayout(false);
@@ -497,6 +548,8 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button button123456;
         public System.Windows.Forms.Label label5;
+        private Guna.UI2.WinForms.Guna2Button guna2Button7;
+        private Guna.UI2.WinForms.Guna2Button guna2Button8;
         private System.Windows.Forms.Button button9;
     }
 }
