@@ -1018,7 +1018,7 @@ namespace TeklaArtigosOfeliz
                 return;
             }
 
-            string CaminhoFabrico = $@"\\marconi\\OFELIZ\\OFELIZ\\OFM\\2.AN\\2.CM\\DP\\1 Obras\\{ano}\\{numeroObra}\\1.9 Gestão de fabrico";
+            string CaminhoFabrico = $@"\\marconi\\COMPANY SHARED FOLDER\\OFELIZ\\OFM\\2.AN\\2.CM\\DP\\1 Obras\\{ano}\\{numeroObra}\\1.9 Gestão de fabrico";
 
             var jsonFabrico = $@"{{
                                     ""DialogType"": ""export.common"",
